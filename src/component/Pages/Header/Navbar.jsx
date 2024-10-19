@@ -1,26 +1,29 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { IoMdArrowDropdown } from 'react-icons/io';
-// import logo from '../../../assets/images/logo.png';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../Provider/AuthProvider';
 
 const Navbar = () => {
+    const { user, logOut } = useContext(AuthContext);
     const [activeItem, setActiveItem] = useState(null);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const dropdown1Ref = useRef(null);
-    const dropdown2Ref = useRef(null);
-    const dropdown3Ref = useRef(null);
+    const dropdownRef = useRef(null);
     const menuRef = useRef(null);
 
+    const handleLogout = () => {
+        logOut(); // Perform logout action
+        toast.success('Logged out successfully'); // Show success toast
+        setIsMenuOpen(false); // Close menu after logout
+        setActiveItem(null); // Reset active dropdown
+    };
+
     const handleClickOutside = (event) => {
-        if (
-            (dropdown1Ref.current && !dropdown1Ref.current.contains(event.target)) ||
-            (dropdown2Ref.current && !dropdown2Ref.current.contains(event.target)) ||
-            (dropdown3Ref.current && !dropdown3Ref.current.contains(event.target))
-        ) {
-            setActiveItem(null);
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setActiveItem(null);  // Close the dashboard dropdown if clicking outside
         }
         if (menuRef.current && !menuRef.current.contains(event.target)) {
-            setIsMenuOpen(false);
+            setIsMenuOpen(false);  // Close mobile menu if clicking outside
         }
     };
 
@@ -37,12 +40,9 @@ const Navbar = () => {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo Section */}
                     <div className="flex items-center">
-                        {/* <img
-                            src="{logo}"
-                            alt="Logo"
-                            className="h-14 w-auto rounded-full"
-                        /> */}
-                        <span className="md:ml-2 text-sm md:text-2xl text-blue-950 font-bold">TAREK TURJO</span>
+                        <Link to="/">
+                            <span className="md:ml-2 text-sm md:text-2xl text-blue-950 font-bold">TAREK TURJO</span>
+                        </Link>
                     </div>
 
                     {/* Responsive Menu Button */}
@@ -78,23 +78,52 @@ const Navbar = () => {
 
                     {/* Desktop Links Section */}
                     <div className="hidden sm:flex sm:items-center sm:space-x-6">
-                        <a href="#" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
+                        <Link to="/" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
                             Home
-                        </a>
-                        <a href="#" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
-                            Company
-                        </a>
-                        <a href="#" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
+                        </Link>
+                        <Link to="/biography" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
+                            Biography
+                        </Link>
+                        <Link to="/portfolio" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
                             Portfolio
-                        </a>
-                        <a href="#" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
+                        </Link>
+                        <Link to="/faq" className="text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out">
                             FAQ
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Desktop Contact Section */}
                     <div className="hidden sm:flex sm:items-center sm:space-x-4">
-                        <button className="btn btn-outline text-[#183282] rounded-xl border border-[#FF9A63]">Contact us</button>
+                        {user ? (
+                            <div className="relative">
+                                <button
+                                    onClick={() => setActiveItem(activeItem === 'Dashboard' ? null : 'Dashboard')}
+                                    className="flex items-center gap-1 text-gray-800 hover:text-blue-600 transition duration-200 ease-in-out"
+                                >
+                                    Dashboard <IoMdArrowDropdown className="text-2xl" />
+                                </button>
+                                {activeItem === 'Dashboard' && (
+                                    <div ref={dropdownRef} className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-md">
+                                        <Link to="/order-list" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                            Order list
+                                        </Link>
+                                        <button
+                                            onClick={() => {
+                                                setActiveItem(null);  // Close dropdown after logout
+                                                handleLogout();
+                                            }}
+                                            className="block cursor-pointer px-4 py-2 text-gray-800 hover:bg-gray-100"
+                                        >
+                                            Log out
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-100">
+                                Login
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>
@@ -124,24 +153,24 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="px-2 pt-2 pb-3 space-y-1">
-                    <a href="#" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    <Link to="/" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
                         Home
-                    </a>
-                    <a href="#" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
-                        Company
-                    </a>
-                    <a href="#" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    </Link>
+                    <Link to="/biography" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                        Biography
+                    </Link>
+                    <Link to="/portfolio" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
                         Portfolio
-                    </a>
-                    <a href="#" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    </Link>
+                    <Link to="/faq" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
                         FAQ
-                    </a>
+                    </Link>
                 </div>
                 <div className="px-2 pb-3 space-y-1">
-                    <a href="#" className="relative inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-medium transition-all bg-blue-600 rounded-full hover:bg-white group">
+                    <Link to="/login" className="relative inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-medium transition-all bg-blue-600 rounded-full hover:bg-white group">
                         <span className="absolute inset-0 border-0 group-hover:border-[25px] ease-linear duration-100 transition-all border-white rounded-full"></span>
-                        <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-blue-600">Contact Us</span>
-                    </a>
+                        <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-blue-600">Login</span>
+                    </Link>
                 </div>
             </div>
         </nav>

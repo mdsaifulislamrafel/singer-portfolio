@@ -2,6 +2,7 @@ import Banner from "../Banner/Banner";
 import GallerySection from "../GallerySection/GallerySection";
 import MagicianOfMelody from "../MagicianOfMelody/MagicianOfMelody";
 import MusicProfile from "../MusicProfile/MusicProfile";
+import VideoSection from "../VideoSection/VideoSection";
 import Whatsapp from "../Whatsapp/Whatsapp";
 
 
@@ -14,6 +15,7 @@ const Home = () => {
                 <MusicProfile />
                 <GallerySection />
                 <Whatsapp />
+                <VideoSection />
             </div>
         </div>
     );
