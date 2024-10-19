@@ -153,26 +153,47 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className="px-2 pt-2 pb-3 space-y-1">
-                    <Link to="/" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    <Link
+                        to="/"
+                        className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md"
+                        onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                    >
                         Home
                     </Link>
-                    <Link to="/biography" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    <Link
+                        to="/biography"
+                        className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md"
+                        onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                    >
                         Biography
                     </Link>
-                    <Link to="/portfolio" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    <Link
+                        to="/portfolio"
+                        className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md"
+                        onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                    >
                         Portfolio
                     </Link>
-                    <Link to="/faq" className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md">
+                    <Link
+                        to="/faq"
+                        className="text-gray-800 hover:bg-gray-100 block px-3 py-2 rounded-md"
+                        onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                    >
                         FAQ
                     </Link>
                 </div>
                 <div className="px-2 pb-3 space-y-1">
-                    <Link to="/login" className="relative inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-medium transition-all bg-blue-600 rounded-full hover:bg-white group">
+                    <Link
+                        to="/login"
+                        className="relative inline-flex items-center justify-start inline-block px-5 py-3 overflow-hidden font-medium transition-all bg-blue-600 rounded-full hover:bg-white group"
+                        onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                    >
                         <span className="absolute inset-0 border-0 group-hover:border-[25px] ease-linear duration-100 transition-all border-white rounded-full"></span>
                         <span className="relative w-full text-left text-white transition-colors duration-200 ease-in-out group-hover:text-blue-600">Login</span>
                     </Link>
                 </div>
             </div>
+
         </nav>
     );
 };
